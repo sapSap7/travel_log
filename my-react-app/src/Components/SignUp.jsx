@@ -1,15 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./LoginForm.css";
+import "./LoginForm.css"; // משתמש באותו CSS של ה-LoginForm
 
-export default function LoginForm({ onSwitch }) {
+export default function SignUp({ onSwitch }) {
   const modalRef = useRef(null);
   const scrollDownRef = useRef(null);
   let isOpened = useRef(false);
 
-  // מצבי קלט
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const openModal = () => {
     if (modalRef.current) {
@@ -46,24 +46,33 @@ export default function LoginForm({ onSwitch }) {
     };
   }, []);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
+
       if (!res.ok) {
-        setError(data.message || "Login failed");
-      } else {
-        localStorage.setItem("token", data.token);
-        alert("Login successful!");
-        window.location.href = "/Home";
+        const data = await res.json();
+        setError(data.message || "Registration failed");
+        return;
       }
+
+      const data = await res.json();
+      console.log("Registration successful, token:", data.token);
+      setError(null);
+      window.location.href = "/Home";
     } catch {
       setError("Server error");
     }
@@ -79,12 +88,11 @@ export default function LoginForm({ onSwitch }) {
       <div className="modal" ref={modalRef}>
         <div className="modal-container">
           <div className="modal-left">
-            <h1 className="modal-title">Welcome!</h1>
+            <h1 className="modal-title">Join Us!</h1>
             <p className="modal-desc">
-              Log in to write new experiences in your journal
+              Create a new account to start your journey
             </p>
-
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
               <div className="input-block">
                 <label htmlFor="email" className="input-label">
                   Email
@@ -99,7 +107,6 @@ export default function LoginForm({ onSwitch }) {
                   required
                 />
               </div>
-
               <div className="input-block">
                 <label htmlFor="password" className="input-label">
                   Password
@@ -114,28 +121,29 @@ export default function LoginForm({ onSwitch }) {
                   required
                 />
               </div>
-
+              <div className="input-block">
+                <label htmlFor="confirm-password" className="input-label">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  name="confirm-password"
+                  id="confirm-password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
               {error && <p style={{ color: "red" }}>{error}</p>}
-
               <div className="modal-buttons">
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onSwitch();
-                  }}
-                >
-                  Forgot your password?
-                </a>
-
-                <button className="input-button" type="submit">
-                  Login
+                <button type="submit" className="input-button">
+                  Sign Up
                 </button>
               </div>
             </form>
-
             <p className="sign-up">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <a
                 href="#"
                 onClick={(e) => {
@@ -143,7 +151,7 @@ export default function LoginForm({ onSwitch }) {
                   onSwitch();
                 }}
               >
-                Sign up now
+                Login here
               </a>
             </p>
           </div>
@@ -151,7 +159,7 @@ export default function LoginForm({ onSwitch }) {
           <div className="modal-right">
             <img
               src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?ixlib=rb-0.3.5&auto=format&fit=crop&w=1000&q=80"
-              alt="Login"
+              alt="Sign Up"
             />
           </div>
 
@@ -163,7 +171,7 @@ export default function LoginForm({ onSwitch }) {
         </div>
 
         <button className="modal-button" onClick={openModal}>
-          Click here to login
+          Click here to sign up
         </button>
       </div>
     </>
