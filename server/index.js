@@ -17,8 +17,6 @@ app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-console.log("MONGO_URI is:", process.env.MONGO_URI);
-
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -32,3 +30,9 @@ app.use("/api/entries", entryRoutes);
 
 const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
+
+const logsRoute = require("./routes/logs");
+app.use("/api/logs", logsRoute);
+
+const uploadRoute = require("./routes/upload");
+app.use("/api/upload", uploadRoute);

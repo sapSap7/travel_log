@@ -70,7 +70,7 @@ export default function SignUp({ onSwitch }) {
       }
 
       const data = await res.json();
-      console.log("Registration successful, token:", data.token);
+      localStorage.setItem("token", data.token);
       setError(null);
       window.location.href = "/Home";
     } catch {

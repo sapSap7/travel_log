@@ -1,0 +1,81 @@
+.log-form {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 16px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.log-form h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.log-form input,
+.log-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.log-form input:focus,
+.log-form textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+  background-color: #ffffff;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.4);
+}
+
+.log-form .location,
+.log-form .title,
+.log-form .date,
+.log-form .desc,
+.log-form .photoURL {
+  display: block;
+}
+
+.log-form p {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 12px;
+  color: #2e7d32;
+}
+
+.log-form button {
+  display: block;
+  margin: 0 auto; /* center horizontally */
+  padding: 10px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.suggestions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+
+.suggestions li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background-color: #f1f1f1;
+}
