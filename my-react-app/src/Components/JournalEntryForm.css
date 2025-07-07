@@ -29,7 +29,7 @@
 .log-form textarea:focus {
   outline: none;
   border-color: #4caf50;
-  background-color: #ffffff;
+  background-color: #474343;
   box-shadow: 0 0 4px rgba(76, 175, 80, 0.4);
 }
 
@@ -67,7 +67,7 @@
   overflow-y: auto;
   background: #fff;
   position: absolute;
-  width: 100%;
+  width: 275px;
   z-index: 1000;
 }
 

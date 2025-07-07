@@ -77,6 +77,7 @@ export default function JournalEntryForm() {
   };
 
   const [uploading, setUploading] = useState(false);
+  const [photoData, setPhotoData] = useState({ url: "", public_id: "" });
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -93,6 +94,7 @@ export default function JournalEntryForm() {
       });
 
       const data = await res.json();
+      setPhotoData({ url: data.url, public_id: data.public_id || "" });
       setFormData({ ...formData, photoUrl: data.url });
     } catch (err) {
       console.error("Upload failed", err);
@@ -102,7 +104,7 @@ export default function JournalEntryForm() {
   };
 
   return (
-    <div className="log-form" style={{ padding: 20 }}>
+    <div className="log-form">
       <h2>Add New Log</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -165,6 +167,36 @@ export default function JournalEntryForm() {
         />
         <br />
         <br />
+        {photoData.url && (
+          <div style={{ marginTop: "1rem", position: "relative" }}>
+            <img
+              src={photoData.url}
+              alt="Preview"
+              style={{ width: "100%", borderRadius: "8px" }}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setPhotoData({ url: "", public_id: "" });
+                setFormData({ ...formData, photoUrl: "" });
+              }}
+              style={{
+                position: "absolute",
+                top: 10,
+                right: 10,
+                background: "#ff4444",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                padding: "4px 8px",
+                cursor: "pointer",
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        )}
+
         <button type="submit">Add Log</button>
       </form>
       <MapDisplay coordinates={coordinates} />
