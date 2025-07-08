@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginForm from "./Components/LoginForm";
 import SignUp from "./Components/SignUp";
 import Home from "./Components/Home";
+import UserLogs from "./Components/UserLogs";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -21,6 +22,7 @@ function App() {
           }
         />
         <Route path="/home" element={<Home />} />
+        <Route path="/api/logs" element={<UserLogs />} />
       </Routes>
     </Router>
   );

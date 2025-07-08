@@ -2,7 +2,7 @@
 // show user's logs
 
 import React, { useState, useEffect } from "react";
-import Router from "react-router-dom";
+//import Router from "react-router-dom";
 import LogOutButton from "./LogOutButton";
 import { useNavigate } from "react-router-dom";
 import "./UserLogs.css";

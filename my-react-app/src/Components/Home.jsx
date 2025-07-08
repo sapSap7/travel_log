@@ -10,13 +10,12 @@ export default function Home() {
   const goToCalendar = () => {
     // נניח שהיומן שלך נמצא בנתיב /calendar
     navigate("/logs");
-    <UserLogs />;
   };
 
   return (
     <div>
       <h1>Welcome to Home</h1>
-      <button onClick={goToCalendar}>Go to Calendar</button>
+      <button onClick={goToCalendar}>Go to personal logs</button>
       <LogOutButton />
       <JournalEntryForm />
     </div>
