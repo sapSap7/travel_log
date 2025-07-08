@@ -10,9 +10,11 @@ function verifyToken(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.userId;
+    console.log("Decoded token:", decoded);
+    req.user = { id: decoded.userId };
     next();
   } catch {
+    console.error("Token verification failed:", err);
     res.status(403).json({ message: "Invalid token" });
   }
 }
@@ -24,6 +26,16 @@ router.post("/", verifyToken, async (req, res) => {
     res.status(201).json(newEntry);
   } catch (err) {
     res.status(500).json({ message: "Failed to save log" });
+  }
+});
+
+router.get("/", verifyToken, async (req, res) => {
+  try {
+    const entries = await JournalEntry.find({ user: req.user.id });
+    res.json(entries);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch logs" });
   }
 });
 
