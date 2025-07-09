@@ -261,3 +261,51 @@ body {
     display: none;
   }
 }
+
+.google-auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #7f6655;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin: 1rem auto 0 auto;
+}
+
+.google-auth-button:hover {
+  background-color: #665346;
+}
+
+.google-auth-button svg {
+  font-size: 1.2rem;
+}
+
+.modal-left {
+  display: flex;
+  flex-direction: column;
+  padding: 60px 30px 20px;
+  background: #fff;
+  flex: 1.5;
+}
+
+.modal-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.google-auth-button.google-bottom {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  align-self: center;
+}

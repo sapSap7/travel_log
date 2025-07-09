@@ -1,5 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./LoginForm.css"; // משתמש באותו CSS של ה-LoginForm
+import "./LoginForm.css"; // עדיין משתמש ב-CSS משותף
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { app } from "../firebase";
+import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 export default function SignUp({ onSwitch }) {
   const modalRef = useRef(null);
@@ -72,9 +77,33 @@ export default function SignUp({ onSwitch }) {
       const data = await res.json();
       localStorage.setItem("token", data.token);
       setError(null);
-      window.location.href = "/Home";
+      toast.success("SignUp successful!");
+      setTimeout(() => {
+        window.location.href = "/Home";
+      }, 2000);
     } catch {
       setError("Server error");
+    }
+  };
+
+  const handleGoogleSignUp = async () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth(app);
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
+
+      toast.success("Signed up with Google successfully!");
+      setTimeout(() => {
+        window.location.href = "/Home";
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      setError("Google Sign-Up failed");
     }
   };
 
@@ -88,72 +117,88 @@ export default function SignUp({ onSwitch }) {
       <div className="modal" ref={modalRef}>
         <div className="modal-container">
           <div className="modal-left">
-            <h1 className="modal-title">Join Us!</h1>
-            <p className="modal-desc">
-              Create a new account to start your journey
-            </p>
-            <form onSubmit={handleSubmit}>
-              <div className="input-block">
-                <label htmlFor="email" className="input-label">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-block">
-                <label htmlFor="password" className="input-label">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-block">
-                <label htmlFor="confirm-password" className="input-label">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  name="confirm-password"
-                  id="confirm-password"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </div>
-              {error && <p style={{ color: "red" }}>{error}</p>}
-              <div className="modal-buttons">
-                <button type="submit" className="input-button">
-                  Sign Up
-                </button>
-              </div>
-            </form>
-            <p className="sign-up">
-              Already have an account?{" "}
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSwitch();
-                }}
+            <div className="modal-content-wrapper">
+              <h1 className="modal-title">Join Us!</h1>
+              <p className="modal-desc">
+                Create a new account to start your journey
+              </p>
+
+              <form onSubmit={handleSubmit}>
+                <div className="input-block">
+                  <label htmlFor="email" className="input-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="input-block">
+                  <label htmlFor="password" className="input-label">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="input-block">
+                  <label htmlFor="confirm-password" className="input-label">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    name="confirm-password"
+                    id="confirm-password"
+                    placeholder="Confirm Password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                </div>
+
+                {error && <p style={{ color: "red" }}>{error}</p>}
+
+                <div className="modal-buttons">
+                  <button type="submit" className="input-button">
+                    Sign Up
+                  </button>
+                </div>
+              </form>
+
+              <button
+                onClick={handleGoogleSignUp}
+                className="google-auth-button google-bottom"
               >
-                Login here
-              </a>
-            </p>
+                <FontAwesomeIcon icon={faGoogle} />
+                Sign Up with Google
+              </button>
+
+              <p className="sign-up">
+                Already have an account?{" "}
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSwitch();
+                  }}
+                >
+                  Login here
+                </a>
+              </p>
+            </div>
           </div>
 
           <div className="modal-right">

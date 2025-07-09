@@ -1,12 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./LoginForm.css";
-
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../firebase";
+import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 export default function LoginForm({ onSwitch }) {
   const modalRef = useRef(null);
   const scrollDownRef = useRef(null);
   let isOpened = useRef(false);
 
-  // מצבי קלט
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -61,11 +64,31 @@ export default function LoginForm({ onSwitch }) {
         setError(data.message || "Login failed");
       } else {
         localStorage.setItem("token", data.token);
-        alert("Login successful!");
-        window.location.href = "/Home";
+        toast.success("Login successful!");
+        setTimeout(() => {
+          window.location.href = "/Home";
+        }, 2000);
       }
     } catch {
       setError("Server error");
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const token = await user.getIdToken();
+
+      localStorage.setItem("token", token);
+      toast.success("Logged in with Google successfully!");
+      setTimeout(() => {
+        window.location.href = "/Home";
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      setError("Google login failed");
+      toast.error("Google login failed");
     }
   };
 
@@ -133,6 +156,11 @@ export default function LoginForm({ onSwitch }) {
                 </button>
               </div>
             </form>
+
+            <button onClick={handleGoogleLogin} className="google-auth-button">
+              <FontAwesomeIcon icon={faGoogle} />
+              Login with Google
+            </button>
 
             <p className="sign-up">
               Don't have an account?{" "}
