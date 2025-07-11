@@ -14,29 +14,34 @@ function verifyToken(req, res, next) {
     req.user = { id: decoded.userId };
     next();
   } catch {
-    console.error("Token verification failed:", err);
+    console.error("Token verification failed:", error);
     res.status(403).json({ message: "Invalid token" });
   }
 }
 
 router.post("/", verifyToken, async (req, res) => {
   try {
-    const newEntry = new JournalEntry({ ...req.body, user: req.user });
+    const newEntry = new JournalEntry({ ...req.body, user: req.user.id });
     await newEntry.save();
     res.status(201).json(newEntry);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to save log" });
+  }
+  catch (error) {
+    console.error("Token verification failed:", error);
+    res.status(403).json({ message: "Invalid token" });
   }
 });
 
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const entries = await JournalEntry.find({ user: req.user.id });
-    res.json(entries);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to fetch logs" });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded token:", decoded);
+    req.user = { id: decoded.userId };
+    next();
+  } catch (error) {
+    console.error("Token verification failed:", error);
+    res.status(403).json({ message: "Invalid token" });
   }
+
 });
 
 module.exports = router;

@@ -4,6 +4,8 @@ import LoginForm from "./Components/LoginForm";
 import SignUp from "./Components/SignUp";
 import Home from "./Components/Home";
 import UserLogs from "./Components/UserLogs";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
