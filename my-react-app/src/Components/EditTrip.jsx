@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function EditTrip() {
   const { id } = useParams();
@@ -21,7 +22,6 @@ export default function EditTrip() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        // המרה לפורמט שמתאים לשדות הטופס, למשל תאריך בפורמט yyyy-mm-dd
         const { title, date, location, description, photoUrl } = res.data;
         setTripData({
           title,
@@ -33,7 +33,11 @@ export default function EditTrip() {
       })
       .catch((err) => {
         console.error(err);
-        alert("שגיאה בטעינת הטיול לעריכה");
+        Swal.fire({
+          icon: "error",
+          title: "שגיאה",
+          text: "שגיאה בטעינת הטיול לעריכה",
+        });
       });
   }, [id, token]);
 
@@ -49,12 +53,23 @@ export default function EditTrip() {
       })
 
       .then(() => {
-        alert("טיול עודכן בהצלחה");
+        Swal.fire({
+          icon: "success",
+          title: "בוצע",
+          text: "טיול עודכן בהצלחה",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+
         navigate(`/trip/${id}`);
       })
       .catch((err) => {
         console.error(err);
-        alert("שגיאה בעדכון הטיול");
+        Swal.fire({
+          icon: "error",
+          title: "שגיאה",
+          text: "שגיאה בטעינת הטיול",
+        });
       });
   }
 

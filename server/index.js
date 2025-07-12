@@ -36,3 +36,8 @@ app.use("/api/logs", logsRoute);
 
 const uploadRoute = require("./routes/upload");
 app.use("/api/upload", uploadRoute);
+const publicRoutes = require("./routes/public");
+app.use("/api/public", publicRoutes);
+;
+const commentRoutes = require("./routes/comments");
+app.use("/api/comments", commentRoutes);

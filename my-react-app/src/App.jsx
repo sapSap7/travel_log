@@ -9,6 +9,7 @@ import TripDetails from "./Components/TripDetails";
 import EditTrip from "./Components/EditTrip";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HomePage from "./Components/HomePage";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -16,8 +17,10 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
+
         <Route
-          path="/"
+          path="/login"
           element={
             showLogin ? (
               <LoginForm onSwitch={() => setShowLogin(false)} />

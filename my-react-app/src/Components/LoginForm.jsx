@@ -66,7 +66,7 @@ export default function LoginForm({ onSwitch }) {
         localStorage.setItem("token", data.token);
         toast.success("Login successful!");
         setTimeout(() => {
-          window.location.href = "/Home";
+          window.location.href = "/";
         }, 2000);
       }
     } catch {
