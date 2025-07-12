@@ -4,9 +4,11 @@ import LoginForm from "./Components/LoginForm";
 import SignUp from "./Components/SignUp";
 import Home from "./Components/Home";
 import UserLogs from "./Components/UserLogs";
+import Trips from "./Components/Trips";
+import TripDetails from "./Components/TripDetails";
+import EditTrip from "./Components/EditTrip";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Trips from "./Components/Trips";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -27,6 +29,9 @@ function App() {
         <Route path="/trips" element={<Trips />} />
         <Route path="/home" element={<Home />} />
         <Route path="/api/logs" element={<UserLogs />} />
+
+        <Route path="/trip/:id" element={<TripDetails />} />
+        <Route path="/edit-trip/:id" element={<EditTrip />} />
       </Routes>
       <ToastContainer position="bottom-right" autoClose={3000} />
     </Router>

@@ -13,7 +13,7 @@ function verifyToken(req, res, next) {
     console.log("Decoded token:", decoded);
     req.user = { id: decoded.userId };
     next();
-  } catch {
+  } catch (error) {
     console.error("Token verification failed:", error);
     res.status(403).json({ message: "Invalid token" });
   }
@@ -26,22 +26,19 @@ router.post("/", verifyToken, async (req, res) => {
     res.status(201).json(newEntry);
   }
   catch (error) {
-    console.error("Token verification failed:", error);
-    res.status(403).json({ message: "Invalid token" });
+    console.error("Error creating entry:", error);
+    res.status(500).json({ message: "Error creating entry" });
   }
 });
 
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded token:", decoded);
-    req.user = { id: decoded.userId };
-    next();
+    const entries = await JournalEntry.find({ user: req.user.id }).sort({ date: -1 });
+    res.json(entries);
   } catch (error) {
-    console.error("Token verification failed:", error);
-    res.status(403).json({ message: "Invalid token" });
+    console.error("Error fetching entries:", error);
+    res.status(500).json({ message: "Error fetching entries" });
   }
-
 });
 
 module.exports = router;
