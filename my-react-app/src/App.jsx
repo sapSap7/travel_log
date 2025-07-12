@@ -6,6 +6,7 @@ import Home from "./Components/Home";
 import UserLogs from "./Components/UserLogs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Trips from "./Components/Trips";
 
 function App() {
   const [showLogin, setShowLogin] = useState(true);
@@ -23,6 +24,7 @@ function App() {
             )
           }
         />
+        <Route path="/trips" element={<Trips />} />
         <Route path="/home" element={<Home />} />
         <Route path="/api/logs" element={<UserLogs />} />
       </Routes>

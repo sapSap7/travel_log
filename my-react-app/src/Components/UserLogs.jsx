@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import "./UserLogs.css";
 
 export default function UserLogs() {
-  const home = useNavigate("/");
+  const Home = useNavigate("/");
   const [logs, setLogs] = useState([]);
   const [error, setError] = useState(null);
 
@@ -19,7 +19,7 @@ export default function UserLogs() {
       try {
         const res = await fetch("http://localhost:5000/api/logs", {
           headers: {
-            Authorization: `Bearer &{token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
