@@ -13,29 +13,31 @@ function verifyToken(req, res, next) {
     console.log("Decoded token:", decoded);
     req.user = { id: decoded.userId };
     next();
-  } catch {
-    console.error("Token verification failed:", err);
+  } catch (error) {
+    console.error("Token verification failed:", error);
     res.status(403).json({ message: "Invalid token" });
   }
 }
 
 router.post("/", verifyToken, async (req, res) => {
   try {
-    const newEntry = new JournalEntry({ ...req.body, user: req.user });
+    const newEntry = new JournalEntry({ ...req.body, user: req.user.id });
     await newEntry.save();
     res.status(201).json(newEntry);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to save log" });
+  }
+  catch (error) {
+    console.error("Error creating entry:", error);
+    res.status(500).json({ message: "Error creating entry" });
   }
 });
 
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const entries = await JournalEntry.find({ user: req.user.id });
+    const entries = await JournalEntry.find({ user: req.user.id }).sort({ date: -1 });
     res.json(entries);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Failed to fetch logs" });
+  } catch (error) {
+    console.error("Error fetching entries:", error);
+    res.status(500).json({ message: "Error fetching entries" });
   }
 });
 

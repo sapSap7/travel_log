@@ -46,7 +46,7 @@ export default function JournalEntryForm() {
       } else {
         setMessage(data.message || "Failed to add log.");
       }
-    } catch (err) {
+    } catch {
       setMessage("Server error.");
     }
   };
@@ -76,7 +76,7 @@ export default function JournalEntryForm() {
     setSuggestions([]);
   };
 
-  const [uploading, setUploading] = useState(false);
+  const [Uploading, setUploading] = useState(false);
   const [photoData, setPhotoData] = useState({ url: "", public_id: "" });
 
   const handleFileChange = async (e) => {
