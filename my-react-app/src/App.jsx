@@ -28,10 +28,11 @@ function App() {
               <SignUp onSwitch={() => setShowLogin(true)} />
             )
           }
+          className="login-form"
         />
         <Route path="/trips" element={<Trips />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/api/logs" element={<UserLogs />} />
+        <Route path="/logs" element={<UserLogs />} />
 
         <Route path="/trip/:id" element={<TripDetails />} />
         <Route path="/edit-trip/:id" element={<EditTrip />} />
