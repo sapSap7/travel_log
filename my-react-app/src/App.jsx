@@ -33,7 +33,10 @@ function App() {
         <Route path="/trips" element={<Trips />} />
         <Route path="/home" element={<Home />} />
         <Route path="/logs" element={<UserLogs />} />
-
+        <Route
+          path="/register"
+          element={<SignUp onSwitch={() => setShowLogin(true)} />}
+        />
         <Route path="/trip/:id" element={<TripDetails />} />
         <Route path="/edit-trip/:id" element={<EditTrip />} />
       </Routes>
