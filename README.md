@@ -1,3 +1,9 @@
-web app to log travel info 
+Travel app designed for you to insert your travles easily!
 
-easy to use - create an account and start inserting your travels ! 
+To get started : 
+- clone this project into your local directory
+- cd into the project
+- install dependecies : npm install
+- start the server: cd server --> npm start
+- start the app : cd my-react-app --> npm i --> npm run dev
+- start logging your travels and enjoy !
