@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useRequireAuth } from "./ProtectedRoute";
+
 export default function Trips() {
   useRequireAuth();
   const [trips, setTrips] = useState([]);
@@ -21,9 +22,9 @@ export default function Trips() {
 
   return (
     <div className="trips-container">
-      <h1>הטיולים שלי</h1>
+      <h1>My Trips</h1>
       <Link to="/Home" className="btn">
-        + הוסף טיול חדש
+        + Add New Trip
       </Link>
       <ul>
         {trips.map((trip) => (
@@ -51,6 +52,7 @@ export default function Trips() {
           </li>
         ))}
       </ul>
+      <Link to="/">Home</Link>
     </div>
   );
 

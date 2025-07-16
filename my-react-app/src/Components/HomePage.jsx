@@ -9,7 +9,6 @@ export default function HomePage() {
   const [commentingEntryId, setCommentingEntryId] = useState(null);
   const navigate = useNavigate();
 
-  // האם המשתמש מחובר? (יש token ב-localStorage)
   const token = localStorage.getItem("token");
   const isLoggedIn = !!token;
 
@@ -17,7 +16,7 @@ export default function HomePage() {
     axios
       .get("http://localhost:5000/api/public/all")
       .then((res) => setEntries(res.data))
-      .catch((err) => console.error("שגיאה בטעינה:", err));
+      .catch((err) => console.error("Error loading entries", err));
   }, []);
 
   const handleCommentSubmit = async (e, entryId) => {
@@ -47,37 +46,27 @@ export default function HomePage() {
       setNewComment("");
       setCommentingEntryId(null);
     } catch (error) {
-      console.error("שגיאה בשליחת תגובה", error);
+      console.error("Error submitting comment", error);
     }
   };
 
   return (
     <div className="home-page-background">
       <div className="homepage">
-        <header
-          style={{
-            width: "100%",
-            maxWidth: 600,
-            marginBottom: 20,
-            display: "flex",
-            justifyContent: "flex-end",
-            gap: "10px",
-            flexWrap: "wrap",
-          }}
-        >
+        <header className="homepage-header">
           {!isLoggedIn ? (
             <>
               <button
                 onClick={() => navigate("/login")}
                 className="button--primary"
               >
-                התחבר
+                Login
               </button>
               <button
                 onClick={() => navigate("/register")}
                 className="button-secondary"
               >
-                הרשמה
+                Register
               </button>
             </>
           ) : (
@@ -85,9 +74,9 @@ export default function HomePage() {
               <button
                 onClick={() => navigate("/home")}
                 className="button--primary"
-                title="עבור לעמוד הבית שלך"
+                title="Go to your private homepage"
               >
-                הבית שלי
+                My Home
               </button>
               <button
                 onClick={() => {
@@ -96,76 +85,41 @@ export default function HomePage() {
                 }}
                 className="button-secondary"
               >
-                התנתק
+                Logout
               </button>
             </>
           )}
         </header>
 
-        <h1>יומן מסע ציבורי</h1>
+        <h1>Public Travel Journal</h1>
 
         {entries.length === 0 ? (
-          <p>אין רשומות להצגה</p>
+          <p>No trips to display.</p>
         ) : (
           entries.map((entry) => (
             <div key={entry._id} className="discussion">
-              <div className="discussion_icons">
-                <div>{/* איקון SVG */}</div>
-                <div className="discussion_icons_settings">{/* הגדרות */}</div>
-              </div>
-
-              <div className="discussion_header">
-                <div className="authed-user">
-                  <strong>{entry.user?.username || "משתמש לא ידוע"}</strong>
-                </div>
-
-                {isLoggedIn ? (
-                  <form onSubmit={(e) => handleCommentSubmit(e, entry._id)}>
-                    <textarea
-                      cols="150"
-                      rows="4"
-                      placeholder="כתוב תגובה..."
-                      value={commentingEntryId === entry._id ? newComment : ""}
-                      onChange={(e) => {
-                        setCommentingEntryId(entry._id);
-                        setNewComment(e.target.value);
-                      }}
-                    ></textarea>
-                    <div className="newcomment_toolbar">
-                      <button
-                        type="button"
-                        className="button-secondary"
-                        onClick={() => setNewComment("")}
-                      >
-                        איפוס
-                      </button>
-                      <button type="submit" className="button--primary">
-                        תגובה
-                      </button>
-                    </div>
-                  </form>
-                ) : (
-                  <p>
-                    <Link to="/login">התחבר</Link> כדי להוסיף תגובה
-                  </p>
-                )}
+              <div className="entry-card">
+                <h3>{entry.title}</h3>
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {new Date(entry.date).toLocaleDateString()}
+                </p>
+                <p>
+                  <strong>Location:</strong> {entry.location}
+                </p>
+                <p>{entry.description?.slice(0, 100)}...</p>
+                <Link to={`/trip/${entry._id}`}>Read more</Link>
               </div>
 
               <div className="discussion_comments">
-                <div className="entry-card">
-                  <h3>{entry.title}</h3>
-                  <p>{new Date(entry.date).toLocaleDateString()}</p>
-                  <p>{entry.location}</p>
-                  <p>{entry.description?.slice(0, 100)}...</p>
-                  <Link to={`/trip/${entry._id}`}>קרא עוד</Link>
-                </div>
-
-                {/* הצגת תגובות */}
+                <h4>Comments</h4>
                 {entry.comments && entry.comments.length > 0 ? (
                   entry.comments.map((comment, i) => (
                     <div key={i} className="comment">
                       <p>
-                        <strong>{comment.user?.username || "משתמש"}</strong>:{" "}
+                        <strong>
+                          {comment.user?.username || "Anonymous"}:
+                        </strong>{" "}
                         {comment.text}
                       </p>
                       <small>
@@ -174,7 +128,38 @@ export default function HomePage() {
                     </div>
                   ))
                 ) : (
-                  <p>אין תגובות</p>
+                  <p>No comments yet.</p>
+                )}
+
+                {isLoggedIn && (
+                  <form onSubmit={(e) => handleCommentSubmit(e, entry._id)}>
+                    <textarea
+                      placeholder="Write a comment..."
+                      value={commentingEntryId === entry._id ? newComment : ""}
+                      onChange={(e) => {
+                        setCommentingEntryId(entry._id);
+                        setNewComment(e.target.value);
+                      }}
+                    />
+                    <div className="newcomment_toolbar">
+                      <button
+                        type="button"
+                        className="button-secondary"
+                        onClick={() => setNewComment("")}
+                      >
+                        Clear
+                      </button>
+                      <button type="submit" className="button--primary">
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {!isLoggedIn && (
+                  <p>
+                    <Link to="/login">Login</Link> to add a comment.
+                  </p>
                 )}
               </div>
             </div>
