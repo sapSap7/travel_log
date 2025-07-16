@@ -6,7 +6,7 @@ import Home from "./Components/Home";
 import UserLogs from "./Components/UserLogs";
 import Trips from "./Components/Trips";
 import TripDetails from "./Components/TripDetails";
-import EditTrip from "./Components/EditTrip";
+import EditTrips from "./Components/EditTrips";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import HomePage from "./Components/HomePage";
@@ -38,7 +38,7 @@ function App() {
           element={<SignUp onSwitch={() => setShowLogin(true)} />}
         />
         <Route path="/trip/:id" element={<TripDetails />} />
-        <Route path="/edit-trip/:id" element={<EditTrip />} />
+        <Route path="/edit-trip/:id" element={<EditTrips />} />
       </Routes>
       <ToastContainer position="bottom-right" autoClose={3000} />
     </Router>

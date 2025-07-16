@@ -1,0 +1,26 @@
+.log-form-wrapper {
+  min-height: 100vh;
+  /* גובה מלא של המסך */
+  display: flex;
+  justify-content: center;
+  /* מרכז אופקי */
+  align-items: center;
+  /* מרכז אנכי */
+  padding: 2rem;
+  background-image: url("../assets/background.JPEG");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+}
+
+.log-form {
+  max-width: 600px;
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+  box-sizing: border-box;
+}

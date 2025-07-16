@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function TripDetails() {
   const { id } = useParams();
@@ -16,7 +17,12 @@ export default function TripDetails() {
       .then((res) => setTrip(res.data))
       .catch((err) => {
         console.error(err);
-        alert("אירעה שגיאה בטעינת הפרטים");
+        Swal.fire({
+          icon: "info",
+          title: "שימו לב",
+          text: "כדי לצפות או לערוך יש להתחבר לחשבון",
+          confirmButtonText: "אוקיי",
+        });
       });
   }, [id, token]);
 

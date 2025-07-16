@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.trips-wrapper {
+  background-image: url("../assets/bg.jpg");
+  /* שים כאן תמונת רקע */
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+}
+
+.trips-title {
+  text-align: center;
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-family: "Kalam", cursive;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.trips-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.trip-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 1rem 1rem 2rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trip-card:hover {
+  transform: scale(1.03);
+}
+
+.trip-card img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.trip-card h3 {
+  font-family: "Kalam", cursive;
+  font-size: 1.4rem;
+  color: #333;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.trip-card p {
+  font-family: "Kalam", cursive;
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin: 0.2rem 0;
+}
+
+.trip-buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.trip-buttons .btn {
+  background: #4a4a7d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.trip-buttons .btn:hover {
+  background: #2e2e5c;
+}

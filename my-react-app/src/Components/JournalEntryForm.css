@@ -50,7 +50,8 @@
 
 .log-form button {
   display: block;
-  margin: 0 auto; /* center horizontally */
+  margin: 0 auto;
+  /* center horizontally */
   padding: 10px 24px;
   font-size: 1rem;
   border-radius: 8px;
@@ -78,4 +79,20 @@
 
 .suggestions li:hover {
   background-color: #f1f1f1;
+}
+
+.log-form-wrapper {
+  min-height: 100vh;
+  /* גובה מלא של המסך */
+  display: flex;
+  justify-content: center;
+  /* מרכז אופקי */
+  align-items: center;
+  /* מרכז אנכי */
+  padding: 2rem;
+  background-image: url("../assets/background.JPEG");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
 }

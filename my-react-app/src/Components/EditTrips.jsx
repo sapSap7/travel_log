@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./EditTrips.css";
 
-export default function EditTrip() {
+export default function EditTrips() {
   const { id } = useParams();
   const [tripData, setTripData] = useState({
     title: "",
@@ -16,7 +17,6 @@ export default function EditTrip() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios;
     axios
       .get(`http://localhost:5000/api/entries/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -51,7 +51,6 @@ export default function EditTrip() {
       .put(`http://localhost:5000/api/entries/${id}`, tripData, {
         headers: { Authorization: `Bearer ${token}` },
       })
-
       .then(() => {
         Swal.fire({
           icon: "success",
@@ -60,7 +59,6 @@ export default function EditTrip() {
           timer: 2000,
           showConfirmButton: false,
         });
-
         navigate(`/trip/${id}`);
       })
       .catch((err) => {
@@ -68,68 +66,89 @@ export default function EditTrip() {
         Swal.fire({
           icon: "error",
           title: "שגיאה",
-          text: "שגיאה בטעינת הטיול",
+          text: "שגיאה בעדכון הטיול",
         });
       });
   }
 
   return (
-    <div className="edit-trip">
-      <h1>ערוך טיול</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          כותרת:
+    <div className="log-form-wrapper">
+      <div className="log-form">
+        <h2>עריכת טיול</h2>
+        <form onSubmit={handleSubmit}>
           <input
+            className="title"
             type="text"
             name="title"
             value={tripData.title}
             onChange={handleChange}
+            placeholder="כותרת"
             required
           />
-        </label>
 
-        <label>
-          תאריך:
           <input
+            className="date"
             type="date"
             name="date"
             value={tripData.date}
             onChange={handleChange}
             required
           />
-        </label>
-
-        <label>
-          מיקום:
           <input
+            className="location"
             type="text"
             name="location"
             value={tripData.location}
             onChange={handleChange}
+            placeholder="מיקום"
           />
-        </label>
-
-        <label>
-          תיאור:
           <textarea
+            className="desc"
             name="description"
             value={tripData.description}
             onChange={handleChange}
+            placeholder="תיאור"
+            rows="4"
           />
-        </label>
-
-        <label>
-          קישור לתמונה:
           <input
+            className="photoURL"
             type="text"
             name="photoUrl"
             value={tripData.photoUrl}
             onChange={handleChange}
+            placeholder="קישור לתמונה"
           />
-        </label>
 
-        <button type="submit">שמור שינויים</button>
-      </form>
+          {tripData.photoUrl && (
+            <div style={{ marginTop: "1rem", position: "relative" }}>
+              <img
+                src={tripData.photoUrl}
+                alt="תצוגה מקדימה"
+                style={{ width: "100%", borderRadius: "8px" }}
+              />
+              <button
+                type="button"
+                onClick={() => setTripData({ ...tripData, photoUrl: "" })}
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  background: "#ff4444",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  padding: "4px 8px",
+                  cursor: "pointer",
+                }}
+              >
+                מחק
+              </button>
+            </div>
+          )}
+
+          <button type="submit">שמור שינויים</button>
+        </form>
+      </div>
     </div>
   );
 }
