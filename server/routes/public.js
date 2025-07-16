@@ -10,8 +10,8 @@ router.get("/all", async (req, res) => {
       .sort({ date: -1 }); // סדר מהחדש לישן
     res.json(entries);
   } catch (error) {
-    console.error("שגיאה בטעינת הרשומות:", error);
-    res.status(500).json({ message: "שגיאת שרת" });
+    console.error("Error loading logs", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 

@@ -4,8 +4,7 @@ const Entry = require("../models/JournalEntry");
 const User = require("../models/User");
 const authMiddleware = require("../middlewares/auth");
 
-
-router.post("/:id/comments", authMiddleware, async (req, res) => {
+router.post("/id/comments", authMiddleware, async (req, res) => {
   try {
     const { text } = req.body;
     if (!text) {
@@ -27,7 +26,6 @@ router.post("/:id/comments", authMiddleware, async (req, res) => {
 
     entry.comments.push(comment);
     await entry.save();
-
 
     const fullComment = await Entry.findById(entry._id)
       .populate("comments.user", "username")
