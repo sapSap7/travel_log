@@ -46,7 +46,6 @@ button:focus-visible {
   outline: 3px auto -webkit-focus-ring-color;
 }
 
-/* Optional: prevent leaflet map style clash */
 #map {
   height: 180px;
 }
