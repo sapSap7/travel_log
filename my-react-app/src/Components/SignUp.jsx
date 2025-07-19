@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import "./LoginForm.css"; // עדיין משתמש ב-CSS משותף
+import "./SignUp.css";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { toast } from "react-toastify";
