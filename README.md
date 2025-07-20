@@ -1,6 +1,7 @@
 Travel app designed for you to insert your travles easily!
 
-To get started : 
+To get started :
+
 - clone this project into your local directory
 - cd into the project
 - install dependecies : npm install
@@ -8,16 +9,28 @@ To get started :
 - start the app : cd my-react-app --> npm i --> npm run dev
 - start logging your travels and enjoy !
 
-Features : 
+Features :
+
 - User authentication via Google (Firebase) and JWT
 - Create, view, edit, and delete personal travel logs
 - Interactive map using Leaflet to display trip locations
 - Location autocomplete using external APIs
-- Image upload and storage using Cloudinary 
+- Image upload and storage using Cloudinary
 - Backend built with Node.js, Express, and MongoDB Atlas
 - Frontend built with React + React Router
 - Password hashing with bcryptjs
 - API communication handled via Axios
 - Middleware architecture for secure frontend-backend communication
 
+Work Management :
 
+- Backend:
+  - Server logic and API calls --> Sapir
+  - Routes and Mongo schemas --> Adir
+  - Concentration into entry file (index.js) --> both
+- Frontend:
+  - Firebase and Google Auth handling --> Adir
+  - Entries and logs logic --> Sapir
+  - Trips and overall styling --> Adir
+  - Maps logic and background images --> Sapir
+  - Home and routes --> both
