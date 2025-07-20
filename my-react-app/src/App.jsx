@@ -38,7 +38,7 @@ function App() {
           element={<SignUp onSwitch={() => setShowLogin(true)} />}
         />
         <Route path="/trip/id" element={<TripDetails />} />
-        <Route path="/edit-trip/:id" element={<EditTrip />} />
+        <Route path="/edit-trip/:id" element={<EditTrips />} />
       </Routes>
       <ToastContainer position="bottom-right" autoClose={3000} />
     </Router>

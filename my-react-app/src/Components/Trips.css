@@ -7,7 +7,7 @@ body {
 
 .trips-wrapper {
   background-image: url("../assets/bg.jpg");
-  /* שים כאן תמונת רקע */
+
   background-size: cover;
   background-position: center;
   min-height: 100vh;
