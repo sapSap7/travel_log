@@ -34,3 +34,9 @@ Work Management :
   - Trips and overall styling --> Adir
   - Maps logic and background images --> Sapir
   - Home and routes --> both
+
+images:
+![תמונה 1](my-react-app/src/assets/readme1.png)
+![תמונה 2](my-react-app/src/assets/readme2.png)
+![תמונה 3](my-react-app/src/assets/readme3.png)
+![תמונה 4](my-react-app/src/assets/readme4.png)
