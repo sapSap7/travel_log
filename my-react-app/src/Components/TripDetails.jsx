@@ -20,7 +20,7 @@ export default function TripDetails() {
         Swal.fire({
           icon: "info",
           title: "שימו לב",
-          text: "כדי לצפות או לערוך יש להתחבר לחשבון",
+          text: "כדי לצפות או לערוך יש להתחבר  לחשבון של יוצר הטיול",
           confirmButtonText: "אוקיי",
         });
       });
